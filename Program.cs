@@ -8,6 +8,7 @@ class Program
         Console.WriteLine("Registro de solicitud");
         Console.WriteLine();
 
+        // R2: Validación del código de estudiante
         string codigo;
 
         do
@@ -17,20 +18,40 @@ class Program
 
             if (!ValidarCodigo(codigo))
             {
-                Console.WriteLine("Error: el código debe tener al menos 6 caracteres.");
+                Console.WriteLine(
+                    "Error: el código debe tener al menos 6 caracteres."
+                );
             }
 
         } while (!ValidarCodigo(codigo));
 
+        // R1: Registro del nombre
         Console.Write("Nombre del estudiante: ");
         string nombre = Console.ReadLine() ?? "";
 
-        Console.Write("Tipo de consulta: ");
-        string tipoConsulta = Console.ReadLine() ?? "";
+        // R3: Validación del tipo de consulta
+        string tipoConsulta;
 
+        do
+        {
+            Console.Write("Tipo de consulta: ");
+            tipoConsulta = Console.ReadLine() ?? "";
+
+            if (!ValidarTipoConsulta(tipoConsulta))
+            {
+                Console.WriteLine("Error: tipo de consulta no válido.");
+                Console.WriteLine(
+                    "Opciones: matrícula, pagos, constancia, plataforma u otro."
+                );
+            }
+
+        } while (!ValidarTipoConsulta(tipoConsulta));
+
+        // R1: Registro de la descripción
         Console.Write("Descripción: ");
         string descripcion = Console.ReadLine() ?? "";
 
+        // Mostrar los datos registrados
         Console.WriteLine();
         Console.WriteLine("=== SOLICITUD REGISTRADA ===");
         Console.WriteLine($"Código: {codigo}");
@@ -39,8 +60,24 @@ class Program
         Console.WriteLine($"Descripción: {descripcion}");
     }
 
+    // R2: Valida que el código no esté vacío
+    // y tenga una longitud mínima de 6 caracteres.
     static bool ValidarCodigo(string codigo)
     {
-        return !string.IsNullOrWhiteSpace(codigo) && codigo.Trim().Length >= 6;
+        return !string.IsNullOrWhiteSpace(codigo)
+               && codigo.Trim().Length >= 6;
+    }
+
+    // R3: Valida que el tipo de consulta
+    // pertenezca a las opciones permitidas.
+    static bool ValidarTipoConsulta(string tipoConsulta)
+    {
+        string tipo = tipoConsulta.Trim().ToLower();
+
+        return tipo == "matrícula" ||
+               tipo == "pagos" ||
+               tipo == "constancia" ||
+               tipo == "plataforma" ||
+               tipo == "otro";
     }
 }
