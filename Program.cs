@@ -4,60 +4,87 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("=== SOPORTE ACADÉMICO ===");
-        Console.WriteLine("Registro de solicitud");
-        Console.WriteLine();
+        MostrarMenu();
 
-        // R2: Validación del código de estudiante
-        string codigo;
+        Console.Write("Seleccione una opción: ");
+        string opcion = Console.ReadLine() ?? "";
 
-        do
+        if (opcion == "1")
         {
-            Console.Write("Código de estudiante: ");
-            codigo = Console.ReadLine() ?? "";
+            Console.WriteLine();
+            Console.WriteLine("Registro de solicitud");
+            Console.WriteLine();
 
-            if (!ValidarCodigo(codigo))
+            // R2: Validación del código de estudiante
+            string codigo;
+
+            do
             {
-                Console.WriteLine(
-                    "Error: el código debe tener al menos 6 caracteres."
-                );
-            }
+                Console.Write("Código de estudiante: ");
+                codigo = Console.ReadLine() ?? "";
 
-        } while (!ValidarCodigo(codigo));
+                if (!ValidarCodigo(codigo))
+                {
+                    Console.WriteLine(
+                        "Error: el código debe tener al menos 6 caracteres."
+                    );
+                }
 
-        // R1: Registro del nombre
-        Console.Write("Nombre del estudiante: ");
-        string nombre = Console.ReadLine() ?? "";
+            } while (!ValidarCodigo(codigo));
 
-        // R3: Validación del tipo de consulta
-        string tipoConsulta;
+            // R1: Registro del nombre
+            Console.Write("Nombre del estudiante: ");
+            string nombre = Console.ReadLine() ?? "";
 
-        do
+            // R3: Validación del tipo de consulta
+            string tipoConsulta;
+
+            do
+            {
+                Console.Write("Tipo de consulta: ");
+                tipoConsulta = Console.ReadLine() ?? "";
+
+                if (!ValidarTipoConsulta(tipoConsulta))
+                {
+                    Console.WriteLine("Error: tipo de consulta no válido.");
+                    Console.WriteLine(
+                        "Opciones: matrícula, pagos, constancia, plataforma u otro."
+                    );
+                }
+
+            } while (!ValidarTipoConsulta(tipoConsulta));
+
+            // R1: Registro de la descripción
+            Console.Write("Descripción: ");
+            string descripcion = Console.ReadLine() ?? "";
+
+            Console.WriteLine();
+            Console.WriteLine("=== SOLICITUD REGISTRADA ===");
+            Console.WriteLine($"Código: {codigo}");
+            Console.WriteLine($"Nombre: {nombre}");
+            Console.WriteLine($"Tipo de consulta: {tipoConsulta}");
+            Console.WriteLine($"Descripción: {descripcion}");
+        }
+        else if (opcion == "2")
         {
-            Console.Write("Tipo de consulta: ");
-            tipoConsulta = Console.ReadLine() ?? "";
+            Console.WriteLine("Gracias por utilizar el sistema.");
+        }
+        else
+        {
+            Console.WriteLine("Opción no válida.");
+        }
+    }
 
-            if (!ValidarTipoConsulta(tipoConsulta))
-            {
-                Console.WriteLine("Error: tipo de consulta no válido.");
-                Console.WriteLine(
-                    "Opciones: matrícula, pagos, constancia, plataforma u otro."
-                );
-            }
-
-        } while (!ValidarTipoConsulta(tipoConsulta));
-
-        // R1: Registro de la descripción
-        Console.Write("Descripción: ");
-        string descripcion = Console.ReadLine() ?? "";
-
-        // Mostrar los datos registrados
-        Console.WriteLine();
-        Console.WriteLine("=== SOLICITUD REGISTRADA ===");
-        Console.WriteLine($"Código: {codigo}");
-        Console.WriteLine($"Nombre: {nombre}");
-        Console.WriteLine($"Tipo de consulta: {tipoConsulta}");
-        Console.WriteLine($"Descripción: {descripcion}");
+    // R4: Muestra el menú principal.
+    // No devuelve ningún valor.
+    static void MostrarMenu()
+    {
+        Console.WriteLine("=================================");
+        Console.WriteLine("      SOPORTE ACADÉMICO");
+        Console.WriteLine("=================================");
+        Console.WriteLine("1. Registrar solicitud");
+        Console.WriteLine("2. Salir");
+        Console.WriteLine("=================================");
     }
 
     // R2: Valida que el código no esté vacío
