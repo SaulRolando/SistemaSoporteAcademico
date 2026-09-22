@@ -87,14 +87,14 @@ class Program
             // R5: Asignación de prioridad
             string prioridad = CalcularPrioridad(tipoConsulta);
 
-            // Resumen de la solicitud
-            Console.WriteLine();
-            Console.WriteLine("=== SOLICITUD REGISTRADA ===");
-            Console.WriteLine($"Código: {codigo}");
-            Console.WriteLine($"Nombre: {nombre}");
-            Console.WriteLine($"Tipo de consulta: {tipoConsulta}");
-            Console.WriteLine($"Descripción: {descripcion}");
-            Console.WriteLine($"Prioridad: {prioridad}");
+            // R7: Mostrar resumen
+            MostrarResumen(
+                codigo,
+                nombre,
+                tipoConsulta,
+                descripcion,
+                prioridad
+            );
         }
         else if (opcion == "2")
         {
@@ -119,16 +119,14 @@ class Program
         Console.WriteLine("=================================");
     }
 
-    // R2: Valida que el código no esté vacío
-    // y tenga una longitud mínima de 6 caracteres.
+    // R2: Valida el código del estudiante.
     static bool ValidarCodigo(string codigo)
     {
         return !string.IsNullOrWhiteSpace(codigo)
                && codigo.Trim().Length >= 6;
     }
 
-    // R3: Valida que el tipo de consulta
-    // pertenezca a las opciones permitidas.
+    // R3: Valida el tipo de consulta.
     static bool ValidarTipoConsulta(string tipoConsulta)
     {
         string tipo = tipoConsulta.Trim().ToLower();
@@ -140,7 +138,7 @@ class Program
                tipo == "otro";
     }
 
-    // R5: Asigna una prioridad según el tipo de consulta.
+    // R5: Asigna una prioridad.
     static string CalcularPrioridad(string tipoConsulta)
     {
         string tipo = tipoConsulta.Trim().ToLower();
@@ -159,10 +157,26 @@ class Program
         }
     }
 
-    // R6: Valida que un texto obligatorio
-    // no esté vacío ni contenga solamente espacios.
+    // R6: Valida que un texto obligatorio no esté vacío.
     static bool ValidarTexto(string texto)
     {
         return !string.IsNullOrWhiteSpace(texto);
+    }
+
+    // R7: Muestra el resumen de la solicitud.
+    static void MostrarResumen(
+        string codigo,
+        string nombre,
+        string tipoConsulta,
+        string descripcion,
+        string prioridad)
+    {
+        Console.WriteLine();
+        Console.WriteLine("=== SOLICITUD REGISTRADA ===");
+        Console.WriteLine($"Código: {codigo}");
+        Console.WriteLine($"Nombre: {nombre}");
+        Console.WriteLine($"Tipo de consulta: {tipoConsulta}");
+        Console.WriteLine($"Descripción: {descripcion}");
+        Console.WriteLine($"Prioridad: {prioridad}");
     }
 }
