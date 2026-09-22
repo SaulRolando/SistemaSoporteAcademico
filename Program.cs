@@ -32,9 +32,22 @@ class Program
 
             } while (!ValidarCodigo(codigo));
 
-            // R1: Registro del nombre
-            Console.Write("Nombre del estudiante: ");
-            string nombre = Console.ReadLine() ?? "";
+            // R6: Validación del nombre
+            string nombre;
+
+            do
+            {
+                Console.Write("Nombre del estudiante: ");
+                nombre = Console.ReadLine() ?? "";
+
+                if (!ValidarTexto(nombre))
+                {
+                    Console.WriteLine(
+                        "Error: este campo es obligatorio."
+                    );
+                }
+
+            } while (!ValidarTexto(nombre));
 
             // R3: Validación del tipo de consulta
             string tipoConsulta;
@@ -54,9 +67,22 @@ class Program
 
             } while (!ValidarTipoConsulta(tipoConsulta));
 
-            // R1: Registro de la descripción
-            Console.Write("Descripción: ");
-            string descripcion = Console.ReadLine() ?? "";
+            // R6: Validación de la descripción
+            string descripcion;
+
+            do
+            {
+                Console.Write("Descripción: ");
+                descripcion = Console.ReadLine() ?? "";
+
+                if (!ValidarTexto(descripcion))
+                {
+                    Console.WriteLine(
+                        "Error: este campo es obligatorio."
+                    );
+                }
+
+            } while (!ValidarTexto(descripcion));
 
             // R5: Asignación de prioridad
             string prioridad = CalcularPrioridad(tipoConsulta);
@@ -83,7 +109,6 @@ class Program
     }
 
     // R4: Muestra el menú principal.
-    // No devuelve ningún valor.
     static void MostrarMenu()
     {
         Console.WriteLine("=================================");
@@ -116,7 +141,6 @@ class Program
     }
 
     // R5: Asigna una prioridad según el tipo de consulta.
-    // Devuelve Alta, Media o Baja.
     static string CalcularPrioridad(string tipoConsulta)
     {
         string tipo = tipoConsulta.Trim().ToLower();
@@ -133,5 +157,12 @@ class Program
         {
             return "Baja";
         }
+    }
+
+    // R6: Valida que un texto obligatorio
+    // no esté vacío ni contenga solamente espacios.
+    static bool ValidarTexto(string texto)
+    {
+        return !string.IsNullOrWhiteSpace(texto);
     }
 }
