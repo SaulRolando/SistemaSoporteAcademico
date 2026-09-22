@@ -42,3 +42,13 @@ de laboratorio, incluyendo:
 - Registro de múltiples solicitudes.
 - Pruebas.
 - Control de versiones con Git y GitHub.
+
+## Pruebas realizadas
+
+Se realizaron las siguientes pruebas al sistema:
+
+1. **Prueba válida:** se registró correctamente una solicitud con datos válidos.
+2. **Campo vacío:** el sistema rechazó un campo obligatorio vacío.
+3. **Tipo incorrecto:** el sistema rechazó un tipo de consulta no permitido.
+4. **Prioridad alta:** una consulta de tipo "pagos" obtuvo prioridad Alta.
+5. **Prioridad baja:** una consulta de tipo "constancia" obtuvo prioridad Baja.
