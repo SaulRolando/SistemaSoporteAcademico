@@ -157,13 +157,15 @@ class Program
         }
     }
 
-    // R6: Valida que un texto obligatorio no esté vacío.
+    // R6 y R9: Valida texto.
+    // La variable texto es un parámetro local de esta función.
     static bool ValidarTexto(string texto)
     {
         return !string.IsNullOrWhiteSpace(texto);
     }
 
-    // R7 y R8: Muestra el resumen usando parámetros recibidos desde Main.
+    // R7 y R9: Muestra el resumen.
+    // Las variables recibidas son parámetros locales de esta función.
     static void MostrarResumen(
         string codigo,
         string nombre,
