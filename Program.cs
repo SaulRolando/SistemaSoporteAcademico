@@ -12,10 +12,10 @@ class Program
         if (opcion == "1")
         {
             Console.WriteLine();
-            Console.WriteLine("Registro de solicitud");
+            Console.WriteLine("=== REGISTRO DE SOLICITUD ===");
             Console.WriteLine();
 
-            // R2: Validación del código de estudiante
+            // R2: Validación del código
             string codigo;
 
             do
@@ -58,19 +58,26 @@ class Program
             Console.Write("Descripción: ");
             string descripcion = Console.ReadLine() ?? "";
 
+            // R5: Asignación de prioridad
+            string prioridad = CalcularPrioridad(tipoConsulta);
+
+            // Resumen de la solicitud
             Console.WriteLine();
             Console.WriteLine("=== SOLICITUD REGISTRADA ===");
             Console.WriteLine($"Código: {codigo}");
             Console.WriteLine($"Nombre: {nombre}");
             Console.WriteLine($"Tipo de consulta: {tipoConsulta}");
             Console.WriteLine($"Descripción: {descripcion}");
+            Console.WriteLine($"Prioridad: {prioridad}");
         }
         else if (opcion == "2")
         {
+            Console.WriteLine();
             Console.WriteLine("Gracias por utilizar el sistema.");
         }
         else
         {
+            Console.WriteLine();
             Console.WriteLine("Opción no válida.");
         }
     }
@@ -80,7 +87,7 @@ class Program
     static void MostrarMenu()
     {
         Console.WriteLine("=================================");
-        Console.WriteLine("      SOPORTE ACADÉMICO");
+        Console.WriteLine("        SOPORTE ACADÉMICO");
         Console.WriteLine("=================================");
         Console.WriteLine("1. Registrar solicitud");
         Console.WriteLine("2. Salir");
@@ -106,5 +113,25 @@ class Program
                tipo == "constancia" ||
                tipo == "plataforma" ||
                tipo == "otro";
+    }
+
+    // R5: Asigna una prioridad según el tipo de consulta.
+    // Devuelve Alta, Media o Baja.
+    static string CalcularPrioridad(string tipoConsulta)
+    {
+        string tipo = tipoConsulta.Trim().ToLower();
+
+        if (tipo == "plataforma" || tipo == "pagos")
+        {
+            return "Alta";
+        }
+        else if (tipo == "matrícula")
+        {
+            return "Media";
+        }
+        else
+        {
+            return "Baja";
+        }
     }
 }
