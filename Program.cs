@@ -8,8 +8,19 @@ class Program
         Console.WriteLine("Registro de solicitud");
         Console.WriteLine();
 
-        Console.Write("Código de estudiante: ");
-        string codigo = Console.ReadLine() ?? "";
+        string codigo;
+
+        do
+        {
+            Console.Write("Código de estudiante: ");
+            codigo = Console.ReadLine() ?? "";
+
+            if (!ValidarCodigo(codigo))
+            {
+                Console.WriteLine("Error: el código debe tener al menos 6 caracteres.");
+            }
+
+        } while (!ValidarCodigo(codigo));
 
         Console.Write("Nombre del estudiante: ");
         string nombre = Console.ReadLine() ?? "";
@@ -26,5 +37,10 @@ class Program
         Console.WriteLine($"Nombre: {nombre}");
         Console.WriteLine($"Tipo de consulta: {tipoConsulta}");
         Console.WriteLine($"Descripción: {descripcion}");
+    }
+
+    static bool ValidarCodigo(string codigo)
+    {
+        return !string.IsNullOrWhiteSpace(codigo) && codigo.Trim().Length >= 6;
     }
 }
