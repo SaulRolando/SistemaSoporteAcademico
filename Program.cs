@@ -138,7 +138,7 @@ class Program
                tipo == "otro";
     }
 
-    // R5: Asigna una prioridad.
+    // R5 y R8: Asigna una prioridad usando el tipo de consulta recibido como parámetro.
     static string CalcularPrioridad(string tipoConsulta)
     {
         string tipo = tipoConsulta.Trim().ToLower();
@@ -163,7 +163,7 @@ class Program
         return !string.IsNullOrWhiteSpace(texto);
     }
 
-    // R7: Muestra el resumen de la solicitud.
+    // R7 y R8: Muestra el resumen usando parámetros recibidos desde Main.
     static void MostrarResumen(
         string codigo,
         string nombre,
