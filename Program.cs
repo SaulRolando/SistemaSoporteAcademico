@@ -1,110 +1,152 @@
 ﻿using System;
+using System.Collections.Generic;
 
 class Program
 {
     static void Main()
     {
-        MostrarMenu();
+        List<string> solicitudes = new List<string>();
 
-        Console.Write("Seleccione una opción: ");
-        string opcion = Console.ReadLine() ?? "";
+        bool continuar = true;
 
-        if (opcion == "1")
+        while (continuar)
         {
-            Console.WriteLine();
-            Console.WriteLine("=== REGISTRO DE SOLICITUD ===");
-            Console.WriteLine();
+            MostrarMenu();
 
-            // R2: Validación del código
-            string codigo;
+            Console.Write("Seleccione una opción: ");
+            string opcion = Console.ReadLine() ?? "";
 
-            do
+            if (opcion == "1")
             {
-                Console.Write("Código de estudiante: ");
-                codigo = Console.ReadLine() ?? "";
+                Console.WriteLine();
+                Console.WriteLine("=== REGISTRO DE SOLICITUD ===");
+                Console.WriteLine();
 
-                if (!ValidarCodigo(codigo))
+                // R2: Validación del código
+                string codigo;
+
+                do
                 {
-                    Console.WriteLine(
-                        "Error: el código debe tener al menos 6 caracteres."
-                    );
+                    Console.Write("Código de estudiante: ");
+                    codigo = Console.ReadLine() ?? "";
+
+                    if (!ValidarCodigo(codigo))
+                    {
+                        Console.WriteLine(
+                            "Error: el código debe tener al menos 6 caracteres."
+                        );
+                    }
+
+                } while (!ValidarCodigo(codigo));
+
+                // R6: Validación del nombre
+                string nombre;
+
+                do
+                {
+                    Console.Write("Nombre del estudiante: ");
+                    nombre = Console.ReadLine() ?? "";
+
+                    if (!ValidarTexto(nombre))
+                    {
+                        Console.WriteLine(
+                            "Error: este campo es obligatorio."
+                        );
+                    }
+
+                } while (!ValidarTexto(nombre));
+
+                // R3: Validación del tipo de consulta
+                string tipoConsulta;
+
+                do
+                {
+                    Console.Write("Tipo de consulta: ");
+                    tipoConsulta = Console.ReadLine() ?? "";
+
+                    if (!ValidarTipoConsulta(tipoConsulta))
+                    {
+                        Console.WriteLine("Error: tipo de consulta no válido.");
+                        Console.WriteLine(
+                            "Opciones: matrícula, pagos, constancia, plataforma u otro."
+                        );
+                    }
+
+                } while (!ValidarTipoConsulta(tipoConsulta));
+
+                // R6: Validación de la descripción
+                string descripcion;
+
+                do
+                {
+                    Console.Write("Descripción: ");
+                    descripcion = Console.ReadLine() ?? "";
+
+                    if (!ValidarTexto(descripcion))
+                    {
+                        Console.WriteLine(
+                            "Error: este campo es obligatorio."
+                        );
+                    }
+
+                } while (!ValidarTexto(descripcion));
+
+                // R5: Asignación de prioridad
+                string prioridad = CalcularPrioridad(tipoConsulta);
+
+                // R7 y R8: Mostrar resumen mediante parámetros
+                MostrarResumen(
+                    codigo,
+                    nombre,
+                    tipoConsulta,
+                    descripcion,
+                    prioridad
+                );
+
+                // R10: Guardar la solicitud registrada
+                solicitudes.Add(
+                    $"{codigo} - {nombre} - {tipoConsulta} - {prioridad}"
+                );
+
+                Console.WriteLine();
+                Console.WriteLine(
+                    $"Solicitudes registradas: {solicitudes.Count}"
+                );
+                Console.WriteLine();
+            }
+            else if (opcion == "2")
+            {
+                Console.WriteLine();
+                Console.WriteLine("=== SOLICITUDES REGISTRADAS ===");
+
+                if (solicitudes.Count == 0)
+                {
+                    Console.WriteLine("No hay solicitudes registradas.");
+                }
+                else
+                {
+                    for (int i = 0; i < solicitudes.Count; i++)
+                    {
+                        Console.WriteLine(
+                            $"{i + 1}. {solicitudes[i]}"
+                        );
+                    }
                 }
 
-            } while (!ValidarCodigo(codigo));
-
-            // R6: Validación del nombre
-            string nombre;
-
-            do
+                Console.WriteLine();
+            }
+            else if (opcion == "3")
             {
-                Console.Write("Nombre del estudiante: ");
-                nombre = Console.ReadLine() ?? "";
+                continuar = false;
 
-                if (!ValidarTexto(nombre))
-                {
-                    Console.WriteLine(
-                        "Error: este campo es obligatorio."
-                    );
-                }
-
-            } while (!ValidarTexto(nombre));
-
-            // R3: Validación del tipo de consulta
-            string tipoConsulta;
-
-            do
+                Console.WriteLine();
+                Console.WriteLine("Gracias por utilizar el sistema.");
+            }
+            else
             {
-                Console.Write("Tipo de consulta: ");
-                tipoConsulta = Console.ReadLine() ?? "";
-
-                if (!ValidarTipoConsulta(tipoConsulta))
-                {
-                    Console.WriteLine("Error: tipo de consulta no válido.");
-                    Console.WriteLine(
-                        "Opciones: matrícula, pagos, constancia, plataforma u otro."
-                    );
-                }
-
-            } while (!ValidarTipoConsulta(tipoConsulta));
-
-            // R6: Validación de la descripción
-            string descripcion;
-
-            do
-            {
-                Console.Write("Descripción: ");
-                descripcion = Console.ReadLine() ?? "";
-
-                if (!ValidarTexto(descripcion))
-                {
-                    Console.WriteLine(
-                        "Error: este campo es obligatorio."
-                    );
-                }
-
-            } while (!ValidarTexto(descripcion));
-
-            // R5: Asignación de prioridad
-            string prioridad = CalcularPrioridad(tipoConsulta);
-
-            // R7: Mostrar resumen
-            MostrarResumen(
-                codigo,
-                nombre,
-                tipoConsulta,
-                descripcion,
-                prioridad
-            );
-        }
-        else if (opcion == "2")
-        {
-            Console.WriteLine();
-            Console.WriteLine("Gracias por utilizar el sistema.");
-        }
-        else
-        {
-            Console.WriteLine();
-            Console.WriteLine("Opción no válida.");
+                Console.WriteLine();
+                Console.WriteLine("Opción no válida.");
+            }
         }
     }
 
@@ -115,7 +157,8 @@ class Program
         Console.WriteLine("        SOPORTE ACADÉMICO");
         Console.WriteLine("=================================");
         Console.WriteLine("1. Registrar solicitud");
-        Console.WriteLine("2. Salir");
+        Console.WriteLine("2. Mostrar solicitudes");
+        Console.WriteLine("3. Salir");
         Console.WriteLine("=================================");
     }
 
@@ -138,7 +181,7 @@ class Program
                tipo == "otro";
     }
 
-    // R5 y R8: Asigna una prioridad usando el tipo de consulta recibido como parámetro.
+    // R5: Asigna una prioridad.
     static string CalcularPrioridad(string tipoConsulta)
     {
         string tipo = tipoConsulta.Trim().ToLower();
@@ -157,15 +200,13 @@ class Program
         }
     }
 
-    // R6 y R9: Valida texto.
-    // La variable texto es un parámetro local de esta función.
+    // R6 y R9: Valida texto y mantiene la variable como parámetro local.
     static bool ValidarTexto(string texto)
     {
         return !string.IsNullOrWhiteSpace(texto);
     }
 
-    // R7 y R9: Muestra el resumen.
-    // Las variables recibidas son parámetros locales de esta función.
+    // R7 y R8: Muestra el resumen mediante parámetros.
     static void MostrarResumen(
         string codigo,
         string nombre,
